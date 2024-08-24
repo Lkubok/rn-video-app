@@ -1,6 +1,6 @@
 {
   "auth": {
-    "signIn": "Sign In"
+    "login_as_guest": "Login as guest"
   },
   "hello": "hello %{name}!"
 }

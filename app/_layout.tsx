@@ -10,6 +10,7 @@ import {
   MD3LightTheme,
   adaptNavigationTheme,
   useTheme,
+  configureFonts,
 } from "react-native-paper";
 import { useColorScheme } from "react-native";
 import { colorsDark } from "@/ui/colorsDark";
@@ -20,6 +21,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import merge from "deepmerge";
+// import { MD3Type } from "react-native-paper/lib/typescript/types";
 
 const customDarkTheme = { ...MD3DarkTheme, colors: colorsDark };
 const customLightTheme = { ...MD3LightTheme, colors: colorsLight };
@@ -41,6 +43,19 @@ export default function Root() {
 
   const paperTheme =
     colorScheme === "dark" ? CombinedDarkTheme : CombinedLightTheme;
+
+  const fontConfig = {
+    bodySmall: {
+      fontFamily: "PoppinsRegular",
+      fontSize: 12,
+      lineHeight: 16,
+    },
+  };
+
+  const paperThemeWithFonts = {
+    ...paperTheme,
+    fonts: configureFonts({ config: fontConfig }),
+  };
 
   // TODO: remove unnecessary fonts iun the end
   // NOTE: In fact i won't be deleting any fonts, but i'm aware they are not necessary and should be removed
@@ -73,8 +88,8 @@ export default function Root() {
   if (!loaded) return null;
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <ThemeProvider value={paperTheme}>
+    <PaperProvider theme={paperThemeWithFonts}>
+      <ThemeProvider value={paperThemeWithFonts}>
         <SessionProvider>
           <Slot />
         </SessionProvider>
