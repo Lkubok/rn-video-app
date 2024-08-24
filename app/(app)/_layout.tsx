@@ -2,6 +2,7 @@ import { Text } from "react-native";
 import { Redirect, Stack } from "expo-router";
 import { useSession } from "@/core/auth/AuthContext";
 import { useColorScheme } from "@/hooks/useColorScheme";
+
 import {
   DarkTheme,
   DefaultTheme,
