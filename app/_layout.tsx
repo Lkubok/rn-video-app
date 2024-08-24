@@ -9,6 +9,7 @@ import {
   MD3DarkTheme,
   MD3LightTheme,
   adaptNavigationTheme,
+  useTheme,
 } from "react-native-paper";
 import { useColorScheme } from "react-native";
 import { colorsDark } from "@/ui/colorsDark";
@@ -30,6 +31,9 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
 
 const CombinedLightTheme = merge(LightTheme, customLightTheme);
 const CombinedDarkTheme = merge(DarkTheme, customDarkTheme);
+
+export type AppTheme = typeof CombinedDarkTheme;
+export const useAppTheme = () => useTheme<AppTheme>();
 
 export default function Root() {
   SplashScreen.preventAutoHideAsync();
