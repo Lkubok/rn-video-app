@@ -1,4 +1,5 @@
 // import Ionicons from "@expo/vector-icons/Ionicons";
+import { ThemedText } from "@/components/ThemedText";
 import {
   //  StyleSheet, Image, Platform,
   View,
@@ -13,8 +14,18 @@ import {
 
 export default function ExploreScreen() {
   return (
-    <View>
+    <View
+      style={{
+        height: 500,
+        marginTop: 100,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Text>Explore</Text>
+      <ThemedText style={{ fontFamily: "PoppinsRegular" }}>
+        custom fonts such as this one.
+      </ThemedText>
     </View>
     // <ParallaxScrollView
     //   headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
