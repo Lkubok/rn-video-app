@@ -2,9 +2,9 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
-
 import { SessionProvider } from "@/core/auth/AuthContext";
 import { Slot } from "expo-router";
+// import "../translations/i18n";
 
 export default function Root() {
   SplashScreen.preventAutoHideAsync();

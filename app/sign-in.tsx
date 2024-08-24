@@ -1,4 +1,5 @@
 import { useSession } from "@/core/auth/AuthContext";
+import { i18n } from "@/translations/i18n";
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 
@@ -12,7 +13,7 @@ export default function SignIn() {
           router.replace("/");
         }}
       >
-        Sign In
+        {i18n.t("auth.signIn")}
       </Text>
     </View>
   );
