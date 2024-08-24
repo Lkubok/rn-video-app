@@ -1,13 +1,42 @@
+import "react-native-reanimated";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import "react-native-reanimated";
 import { SessionProvider } from "@/core/auth/AuthContext";
 import { Slot } from "expo-router";
-// import "../translations/i18n";
+import {
+  PaperProvider,
+  MD3DarkTheme,
+  MD3LightTheme,
+  adaptNavigationTheme,
+} from "react-native-paper";
+import { useColorScheme } from "react-native";
+import { colorsDark } from "@/ui/colorsDark";
+import { colorsLight } from "@/ui/colorsLight";
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import merge from "deepmerge";
+
+const customDarkTheme = { ...MD3DarkTheme, colors: colorsDark };
+const customLightTheme = { ...MD3LightTheme, colors: colorsLight };
+
+const { LightTheme, DarkTheme } = adaptNavigationTheme({
+  reactNavigationLight: NavigationDefaultTheme,
+  reactNavigationDark: NavigationDarkTheme,
+});
+
+const CombinedLightTheme = merge(LightTheme, customLightTheme);
+const CombinedDarkTheme = merge(DarkTheme, customDarkTheme);
 
 export default function Root() {
   SplashScreen.preventAutoHideAsync();
+  const colorScheme = useColorScheme();
+
+  const paperTheme =
+    colorScheme === "dark" ? CombinedDarkTheme : CombinedLightTheme;
 
   // TODO: remove unnecessary fonts iun the end
   // NOTE: In fact i won't be deleting any fonts, but i'm aware they are not necessary and should be removed
@@ -40,8 +69,12 @@ export default function Root() {
   if (!loaded) return null;
 
   return (
-    <SessionProvider>
-      <Slot />
-    </SessionProvider>
+    <PaperProvider theme={paperTheme}>
+      <ThemeProvider value={paperTheme}>
+        <SessionProvider>
+          <Slot />
+        </SessionProvider>
+      </ThemeProvider>
+    </PaperProvider>
   );
 }
