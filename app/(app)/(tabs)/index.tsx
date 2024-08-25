@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -6,38 +7,37 @@ import CategoryList from "@/components/CategoryList/CategoryList";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import { categories } from "@/models/categories";
+import { i18n } from "@/translations/i18n";
+import { styles } from "@/ui/screenStyles/home.styles";
 
 export default function HomeScreen() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const onSettingsPress = () => {};
+
   return (
-    <ThemedLayout style={{ flex: 1 }}>
+    <ThemedLayout style={styles.layout}>
       <ScrollView
-        style={{ marginHorizontal: -24 }}
+        style={styles.marginReset}
         showsVerticalScrollIndicator={false}
       >
-        <SafeAreaView style={{ flex: 1 }}>
-          <View
-            style={{
-              marginHorizontal: 24,
-              marginBottom: 24,
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                alignItems: "center",
-              }}
-            >
+        <SafeAreaView style={styles.safeArea}>
+          <View style={styles.marginRestore}>
+            <View style={styles.header}>
               <SearchBar
-                onChangeText={() => {}}
-                placeholder={"sss"}
-                value={"sss"}
+                onChangeText={setSearchQuery}
+                placeholder={i18n.t("home.searchBarPlaceholder")}
+                value={searchQuery}
               />
-              <TouchableOpacity onPress={() => {}} style={{ paddingLeft: 8 }}>
+
+              <TouchableOpacity
+                onPress={onSettingsPress}
+                style={styles.settings}
+              >
                 <SettingsIcon height={32} width={32} />
               </TouchableOpacity>
             </View>
           </View>
+
           {categories
             .sort((a, b) => a.id - b.id)
             .map((category) => (

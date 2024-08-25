@@ -15,5 +15,8 @@
       "home": "Home",
       "search": "Search"
     }
+  },
+  "home": {
+    "searchBarPlaceholder": "Search videos"
   }
 }
