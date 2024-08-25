@@ -1,6 +1,8 @@
 import { ScrollView, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import CategoryList from "@/components/CategoryList/CategoryList";
+import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import { categories } from "@/models/categories";
 
@@ -11,10 +13,19 @@ export default function HomeScreen() {
         style={{ marginHorizontal: -24 }}
         showsVerticalScrollIndicator={false}
       >
-        <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
           <View
-            style={{ height: 300, borderWidth: 4, borderColor: "red" }}
-          ></View>
+            style={{
+              marginHorizontal: 24,
+              marginBottom: 24,
+            }}
+          >
+            <SearchBar
+              onChangeText={() => {}}
+              placeholder={"sss"}
+              value={"sss"}
+            />
+          </View>
           {categories
             .sort((a, b) => a.id - b.id)
             .map((category) => (
@@ -24,7 +35,7 @@ export default function HomeScreen() {
                 id={category.id}
               />
             ))}
-        </View>
+        </SafeAreaView>
       </ScrollView>
     </ThemedLayout>
   );
