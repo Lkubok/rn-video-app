@@ -7,12 +7,16 @@
   "common": {
     "and": "and",
     "privacy_policy": "Privacy Policy",
-    "terms_and_conditions": "Terms and Conditions"
+    "terms_and_conditions": "Terms and Conditions",
+    "show_more": "Show more"
   },
   "navigation": {
     "tabs": {
       "home": "Home",
       "search": "Search"
     }
+  },
+  "home": {
+    "searchBarPlaceholder": "Search videos"
   }
 }

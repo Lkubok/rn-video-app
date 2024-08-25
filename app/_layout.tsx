@@ -10,7 +10,8 @@ import { configureFonts, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { SessionProvider } from "@/core/auth/AuthContext";
-import { CombinedDarkTheme, CombinedLightTheme, fontConfig } from "@/ui/theme";
+import { fontConfig } from "@/ui/fontConfig";
+import { CombinedDarkTheme, CombinedLightTheme } from "@/ui/theme";
 
 export default function Root() {
   SplashScreen.preventAutoHideAsync();
