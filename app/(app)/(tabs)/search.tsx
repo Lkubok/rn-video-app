@@ -1,4 +1,5 @@
 // import axios from "axios";
+import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
@@ -59,6 +60,7 @@ export default function SearchScreen() {
         thumbnail: item.snippet.thumbnails.medium.url,
         publishedAt: item.snippet.publishedAt,
         channelName: item.snippet.channelTitle,
+        // videoUrl: item.sni
       }));
       setVideos((prevVideos) => [...prevVideos, ...videoData]);
       setNextPageToken(response.data.nextPageToken);
@@ -68,7 +70,13 @@ export default function SearchScreen() {
   };
 
   const renderItem = ({ item }: { item: Video }) => (
-    <VideoItem item={item} variant="large" />
+    <VideoItem
+      item={item}
+      variant="large"
+      onPress={() => {
+        router.push("details", { videoId: item.id });
+      }}
+    />
   );
 
   const handleEndReached = () => {
