@@ -18,5 +18,10 @@
   },
   "home": {
     "searchBarPlaceholder": "Search videos"
+  },
+  "search": {
+    "results_found": "results found for: ",
+    "sort_by": "Sort by: ",
+    "sort_option_popular": "Most popular"
   }
 }
