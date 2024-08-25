@@ -17,7 +17,11 @@ export function ThemedLayout({
 
   return (
     <View
-      style={[{ backgroundColor: colors.secondaryBackground }, style]}
+      style={[
+        { backgroundColor: colors.secondaryBackground },
+        { paddingHorizontal: 32 }, // Global horizontal padding in the App
+        style,
+      ]}
       {...otherProps}
     />
   );
