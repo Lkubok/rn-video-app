@@ -1,6 +1,18 @@
 {
   "auth": {
-    "signIn": "Sign In"
+    "log_in_as_guest": "Log in as guest",
+    "welcome_title": "Welcome to the best YouTube-based learning application.",
+    "footer_main_text": "By continuing you agree with"
   },
-  "hello": "hello %{name}!"
+  "common": {
+    "and": "and",
+    "privacy_policy": "Privacy Policy",
+    "terms_and_conditions": "Terms and Conditions"
+  },
+  "navigation": {
+    "tabs": {
+      "home": "Home",
+      "search": "Search"
+    }
+  }
 }

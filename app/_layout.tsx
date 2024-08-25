@@ -1,35 +1,16 @@
 import "react-native-reanimated";
+
+import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { SessionProvider } from "@/core/auth/AuthContext";
-import { Slot } from "expo-router";
-import {
-  PaperProvider,
-  MD3DarkTheme,
-  MD3LightTheme,
-  adaptNavigationTheme,
-} from "react-native-paper";
 import { useColorScheme } from "react-native";
-import { colorsDark } from "@/ui/colorsDark";
-import { colorsLight } from "@/ui/colorsLight";
-import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import merge from "deepmerge";
+import { configureFonts, PaperProvider } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const customDarkTheme = { ...MD3DarkTheme, colors: colorsDark };
-const customLightTheme = { ...MD3LightTheme, colors: colorsLight };
-
-const { LightTheme, DarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: NavigationDefaultTheme,
-  reactNavigationDark: NavigationDarkTheme,
-});
-
-const CombinedLightTheme = merge(LightTheme, customLightTheme);
-const CombinedDarkTheme = merge(DarkTheme, customDarkTheme);
+import { SessionProvider } from "@/core/auth/AuthContext";
+import { CombinedDarkTheme, CombinedLightTheme, fontConfig } from "@/ui/theme";
 
 export default function Root() {
   SplashScreen.preventAutoHideAsync();
@@ -38,8 +19,13 @@ export default function Root() {
   const paperTheme =
     colorScheme === "dark" ? CombinedDarkTheme : CombinedLightTheme;
 
+  const paperThemeWithFonts = {
+    ...paperTheme,
+    fonts: configureFonts({ config: fontConfig }),
+  };
+
   // TODO: remove unnecessary fonts iun the end
-  // NOTE: In fact i won't be deleting any fonts, but i'm aware they are not necessary and should be removed
+  // NOTE: In fact i won't be deleting any fonts for now, but i'm aware they are not necessary and should be removed
 
   const [loaded] = useFonts({
     PoppinsBlack: require("../assets/fonts/Poppins-Black.ttf"),
@@ -69,12 +55,14 @@ export default function Root() {
   if (!loaded) return null;
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <ThemeProvider value={paperTheme}>
-        <SessionProvider>
-          <Slot />
-        </SessionProvider>
-      </ThemeProvider>
-    </PaperProvider>
+    <SafeAreaProvider>
+      <PaperProvider theme={paperThemeWithFonts}>
+        <ThemeProvider value={paperThemeWithFonts}>
+          <SessionProvider>
+            <Slot />
+          </SessionProvider>
+        </ThemeProvider>
+      </PaperProvider>
+    </SafeAreaProvider>
   );
 }

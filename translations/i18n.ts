@@ -1,8 +1,8 @@
-import { I18n } from "i18n-js";
 import { getLocales } from "expo-localization";
+import { I18n } from "i18n-js";
 
-import pl from "./pl.json";
 import en from "./en.json";
+import pl from "./pl.json";
 
 export const deviceLanguage = getLocales()?.[0]?.languageCode ?? "en";
 

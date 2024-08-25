@@ -4,6 +4,7 @@ import React from "react";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { i18n } from "@/translations/i18n";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -13,12 +14,16 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarInactiveTintColor: "red",
+        tabBarActiveBackgroundColor: "aqua",
+        tabBarInactiveBackgroundColor: "red",
       }}
+      // tabBar={}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: i18n.t("navigation.tabs.home"),
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}
@@ -28,21 +33,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="search"
         options={{
-          title: "Explore",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="sign-out"
-        options={{
-          title: "Sign Out",
+          title: i18n.t("navigation.tabs.search"),
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "code-slash" : "code-slash-outline"}
