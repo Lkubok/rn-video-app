@@ -30,8 +30,13 @@ export const fontConfig = {
     lineHeight: 24,
   },
   headlineSmall: {
-    fontFamily: "PoppinsREgular",
+    fontFamily: "PoppinsRegular",
     fontSize: 10,
     lineHeight: 24,
+  },
+  bodySmall: {
+    fontFamily: "PoppinsRegular",
+    fontSize: 12,
+    lineHeight: 16,
   },
 };

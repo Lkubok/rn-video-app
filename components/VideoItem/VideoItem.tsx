@@ -17,7 +17,7 @@ export const VideoItem = ({ item }: Props) => {
   return (
     <View style={styles.itemContainer}>
       <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-      <Text numberOfLines={2} style={styles.title}>
+      <Text variant="bodySmall" numberOfLines={2} style={styles.title}>
         {item.title}
       </Text>
       <Text variant="headlineSmall" style={[{ alignSelf: "flex-end" }]}>

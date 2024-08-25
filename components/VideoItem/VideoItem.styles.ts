@@ -7,9 +7,8 @@ export const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    marginTop: 5,
+    marginTop: 12,
     fontSize: 14,
-    fontWeight: "bold",
   },
   thumbnail: {
     width: "100%",
