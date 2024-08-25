@@ -45,7 +45,7 @@ export const fontConfig = {
     lineHeight: 24,
   },
   labelMedium: {
-    fontFamily: "PoppingLight",
+    fontFamily: "PoppinsLight",
     fontSize: 13,
     lineHeight: 16,
   },

@@ -14,6 +14,7 @@ export default function AppLayout() {
   const colorScheme = useColorScheme();
 
   if (isLoading) {
+    // TODO: add loading indicator
     return <Text>Loading...</Text>;
   }
 
