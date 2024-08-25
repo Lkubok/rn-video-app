@@ -67,7 +67,6 @@ export default function Root() {
       fontFamily: "PoppingLight",
       fontSize: 13,
       lineHeight: 16,
-      // fontWeight: "400",
     },
   };
 

@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,6 +20,9 @@ export const SignIn = () => {
     signIn();
     router.replace("/");
   };
+
+  const handleLinkPress = async (uri: string) =>
+    await WebBrowser.openBrowserAsync(uri);
 
   return (
     <ThemedLayout style={styles.container}>
@@ -63,7 +67,13 @@ export const SignIn = () => {
               {i18n.t("auth.footer_main_text")}
             </Text>
             <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  handleLinkPress(
+                    "https://play.google.com/about/play-terms/index.html"
+                  )
+                }
+              >
                 <Text
                   style={{
                     fontWeight: "400",
@@ -82,7 +92,11 @@ export const SignIn = () => {
                 }}
                 variant="labelMedium"
               >{` ${i18n.t("common.and")} `}</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  handleLinkPress("https://policies.google.com/privacy")
+                }
+              >
                 <Text
                   style={{
                     fontWeight: "400",
