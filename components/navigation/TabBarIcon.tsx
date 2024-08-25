@@ -1,12 +1,36 @@
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+import HomeIcon from "@/assets/icons/home-icon.svg"; // Adjust the path to your SVG files
+import SearchIcon from "@/assets/icons/search-icon.svg"; // Adjust the path to your SVG files
 
-import { type IconProps } from "@expo/vector-icons/build/createIconSet";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { type ComponentProps } from "react";
-
-export function TabBarIcon({
-  style,
-  ...rest
-}: IconProps<ComponentProps<typeof Ionicons>["name"]>) {
-  return <Ionicons size={28} style={[{ marginBottom: -3 }, style]} {...rest} />;
+interface TabBarIconProps {
+  name: "home" | "search"; // Add other icon names here
+  color: string;
+  size?: number;
 }
+
+const icons = {
+  home: HomeIcon,
+  search: SearchIcon,
+};
+
+export const TabBarIcon: React.FC<TabBarIconProps> = ({
+  name,
+  color,
+  size = 24,
+}) => {
+  const Icon = icons[name];
+
+  if (!Icon) {
+    return null;
+  }
+
+  return (
+    <Icon
+      width={size}
+      height={size}
+      stroke={color}
+      fill={name === "home" ? color : undefined}
+    />
+  );
+};
+
+export default TabBarIcon;
