@@ -39,4 +39,14 @@ export const fontConfig = {
     fontSize: 12,
     lineHeight: 16,
   },
+  bodyMedium: {
+    fontFamily: "PoppinsBold",
+    fontSize: 12,
+    lineHeight: 24,
+  },
+  displayMedium: {
+    fontFamily: "PoppinsRegular",
+    fontSize: 15,
+    lineHeight: 16,
+  },
 };

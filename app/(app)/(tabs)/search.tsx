@@ -1,121 +1,123 @@
-// import Ionicons from "@expo/vector-icons/Ionicons";
+// import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
-  Text,
-  //  StyleSheet, Image, Platform,
+  FlatList,
+  // Image,
+  SafeAreaView,
+  // StyleSheet,
+  TouchableOpacity,
+  // Text,
   View,
 } from "react-native";
+import { Text } from "react-native-paper";
 
-import { ThemedText } from "@/components/ThemedText";
+import SearchBar from "@/components/SearchBar/SearchBar";
+import { ThemedLayout } from "@/components/ThemedLayout";
+import VideoItem from "@/components/VideoItem/VideoItem";
+import { i18n } from "@/translations/i18n";
+import { styles } from "@/ui/screenStyles/search.styles";
 
-// import { Collapsible } from "@/components/Collapsible";
-// import { ExternalLink } from "@/components/ExternalLink";
-// import ParallaxScrollView from "@/components/ParallaxScrollView";
-// import { ThemedText } from "@/components/ThemedText";
-// import { ThemedView } from "@/components/ThemedView";
+// import { styles } from "@/ui/screenStyles/home.styles";
+import { testResponse } from "./testResponse";
 
-export default function ExploreScreen() {
-  return (
-    <View
-      style={{
-        height: 500,
-        marginTop: 100,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Explore</Text>
-      <ThemedText style={{ fontFamily: "PoppinsRegular" }}>
-        custom fonts such as this one.
-      </ThemedText>
-    </View>
-    // <ParallaxScrollView
-    //   headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-    //   headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
-    //   <ThemedView style={styles.titleContainer}>
-    //     <ThemedText type="title">Explore</ThemedText>
-    //   </ThemedView>
-    //   <ThemedText>This app includes example code to help you get started.</ThemedText>
-    //   <Collapsible title="File-based routing">
-    //     <ThemedText>
-    //       This app has two screens:{' '}
-    //       <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-    //       <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-    //     </ThemedText>
-    //     <ThemedText>
-    //       The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-    //       sets up the tab navigator.
-    //     </ThemedText>
-    //     <ExternalLink href="https://docs.expo.dev/router/introduction">
-    //       <ThemedText type="link">Learn more</ThemedText>
-    //     </ExternalLink>
-    //   </Collapsible>
-    //   <Collapsible title="Android, iOS, and web support">
-    //     <ThemedText>
-    //       You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-    //       <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-    //     </ThemedText>
-    //   </Collapsible>
-    //   <Collapsible title="Images">
-    //     <ThemedText>
-    //       For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-    //       <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-    //       different screen densities
-    //     </ThemedText>
-    //     <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-    //     <ExternalLink href="https://reactnative.dev/docs/images">
-    //       <ThemedText type="link">Learn more</ThemedText>
-    //     </ExternalLink>
-    //   </Collapsible>
-    //   <Collapsible title="Custom fonts">
-    //     <ThemedText>
-    //       Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-    //       <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-    //         custom fonts such as this one.
-    //       </ThemedText>
-    //     </ThemedText>
-    //     <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-    //       <ThemedText type="link">Learn more</ThemedText>
-    //     </ExternalLink>
-    //   </Collapsible>
-    //   <Collapsible title="Light and dark mode components">
-    //     <ThemedText>
-    //       This template has light and dark mode support. The{' '}
-    //       <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-    //       what the user's current color scheme is, and so you can adjust UI colors accordingly.
-    //     </ThemedText>
-    //     <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-    //       <ThemedText type="link">Learn more</ThemedText>
-    //     </ExternalLink>
-    //   </Collapsible>
-    //   <Collapsible title="Animations">
-    //     <ThemedText>
-    //       This template includes an example of an animated component. The{' '}
-    //       <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-    //       the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText> library
-    //       to create a waving hand animation.
-    //     </ThemedText>
-    //     {Platform.select({
-    //       ios: (
-    //         <ThemedText>
-    //           The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-    //           component provides a parallax effect for the header image.
-    //         </ThemedText>
-    //       ),
-    //     })}
-    //   </Collapsible>
-    // </ParallaxScrollView>
-  );
+// const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
+
+interface Video {
+  id: string;
+  title: string;
+  thumbnail: string;
+  publishedAt: string;
 }
 
-// const styles = StyleSheet.create({
-//   headerImage: {
-//     color: "#808080",
-//     bottom: -90,
-//     left: -35,
-//     position: "absolute",
-//   },
-//   titleContainer: {
-//     flexDirection: "row",
-//     gap: 8,
-//   },
-// });
+export default function SearchScreen() {
+  const [searchQuery, setSearchQuery] = useState("react");
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [numberOfResults, setNumberOfResults] = useState<number>(0);
+  const [searchedPhrase, setSearchedPhrase] = useState<string>("ReactNative");
+  const [nextPageToken, setNextPageToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      fetchVideos();
+    } else {
+      setVideos([]);
+    }
+  }, [searchQuery]);
+
+  const onSortChangePress = () => {};
+
+  const fetchVideos = async (pageToken: string | null = null) => {
+    try {
+      // const response = await axios.get(
+      // `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&q=${searchQuery}&part=snippet&maxResults=10${pageToken ? `&pageToken=${pageToken}` : ""}`
+      // );
+      // console.log(response);
+      const response = testResponse;
+      const videoData = response.data.items.map((item: any) => ({
+        id: item.id.videoId,
+        title: item.snippet.title,
+        thumbnail: item.snippet.thumbnails.medium.url,
+        publishedAt: item.snippet.publishedAt,
+        channelName: item.snippet.channelTitle,
+      }));
+      setVideos((prevVideos) => [...prevVideos, ...videoData]);
+      setNextPageToken(response.data.nextPageToken);
+    } catch (error) {
+      console.error("Error fetching videos: ", error);
+    }
+  };
+
+  const renderItem = ({ item }: { item: Video }) => (
+    <VideoItem item={item} variant="large" />
+  );
+
+  const handleEndReached = () => {
+    if (nextPageToken) {
+      fetchVideos(nextPageToken);
+    }
+  };
+
+  return (
+    <ThemedLayout style={styles.layout}>
+      <SafeAreaView style={[styles.safeArea, {}]}>
+        <View style={styles.header}>
+          <SearchBar
+            onChangeText={setSearchQuery}
+            placeholder={i18n.t("home.searchBarPlaceholder")}
+            value={searchQuery}
+          />
+          <Text
+            variant="headlineSmall"
+            style={{ alignSelf: "flex-start", marginTop: 12 }}
+          >
+            {numberOfResults} {i18n.t("search.results_found")}
+            <Text
+              variant="headlineSmall"
+              style={{ fontWeight: "700", fontFamily: "PoppinsBold" }}
+            >{`"${searchedPhrase}"`}</Text>
+          </Text>
+          <TouchableOpacity onPress={onSortChangePress}>
+            <Text variant="labelSmall" style={{ alignSelf: "flex-end" }}>
+              {i18n.t("search.sort_by")}
+              <Text
+                variant="labelSmall"
+                style={{ fontFamily: "PoppinsSemiBold" }}
+              >
+                {i18n.t("search.sort_option_popular")}
+              </Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={videos}
+          renderItem={renderItem}
+          keyExtractor={(item) => `${item.id}_${item.title}`}
+          style={{ marginTop: 44 }}
+          showsVerticalScrollIndicator={false}
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.5}
+        />
+      </SafeAreaView>
+    </ThemedLayout>
+  );
+}

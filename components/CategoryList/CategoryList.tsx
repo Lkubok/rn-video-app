@@ -44,6 +44,7 @@ export const CategoryList = ({ category, id }: CategoryListProps) => {
           title: item.snippet.title,
           thumbnail: item.snippet.thumbnails.medium.url,
           publishedAt: item.snippet.publishedAt,
+          channelName: item.snippet.channelTitle,
         }));
         setVideos(videoData);
       } catch (error) {

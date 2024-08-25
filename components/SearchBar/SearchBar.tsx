@@ -1,6 +1,12 @@
 import { Ionicons } from "@expo/vector-icons"; // Ensure you have @expo/vector-icons installed
 import React from "react";
-import { TextInput, View } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  View,
+  ViewStyle,
+} from "react-native";
 
 import { useAppTheme } from "@/ui/theme";
 
@@ -10,13 +16,20 @@ type Props = {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
+  style?: StyleProp<ViewStyle>;
 };
 
-const SearchBar = ({ placeholder, value, onChangeText }: Props) => {
+const SearchBar = ({ placeholder, value, onChangeText, style }: Props) => {
   const { colors } = useAppTheme();
 
   return (
-    <View style={[styles.container, { borderColor: colors.primary }]}>
+    <View
+      style={StyleSheet.flatten([
+        styles.container,
+        { borderColor: colors.primary },
+        style,
+      ])}
+    >
       <Ionicons
         name="search"
         size={20}
