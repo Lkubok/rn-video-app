@@ -1,49 +1,16 @@
 import "react-native-reanimated";
 
-import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import merge from "deepmerge";
+import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
-import {
-  adaptNavigationTheme,
-  configureFonts,
-  MD3DarkTheme,
-  MD3LightTheme,
-  PaperProvider,
-  useTheme,
-} from "react-native-paper";
+import { configureFonts, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { SessionProvider } from "@/core/auth/AuthContext";
-import { colorsDark } from "@/ui/colorsDark";
-import { colorsLight } from "@/ui/colorsLight";
-
-const customDarkTheme = {
-  ...MD3DarkTheme,
-  colors: { ...MD3DarkTheme.colors, ...colorsDark },
-};
-const customLightTheme = {
-  ...MD3LightTheme,
-  colors: { ...MD3LightTheme.colors, ...colorsLight },
-};
-
-const { LightTheme, DarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: NavigationDefaultTheme,
-  reactNavigationDark: NavigationDarkTheme,
-});
-
-const CombinedLightTheme = merge(LightTheme, customLightTheme);
-const CombinedDarkTheme = merge(DarkTheme, customDarkTheme);
-
-export type AppTheme = typeof CombinedDarkTheme;
-export const useAppTheme = () => useTheme<AppTheme>();
+import { CombinedDarkTheme, CombinedLightTheme, fontConfig } from "@/ui/theme";
 
 export default function Root() {
   SplashScreen.preventAutoHideAsync();
@@ -52,31 +19,13 @@ export default function Root() {
   const paperTheme =
     colorScheme === "dark" ? CombinedDarkTheme : CombinedLightTheme;
 
-  const fontConfig = {
-    titleLarge: {
-      fontFamily: "PoppinsSemiBold",
-      fontSize: 22,
-      lineHeight: 24,
-    },
-    titleMedium: {
-      fontFamily: "PoppinsSemiBold",
-      fontSize: 16,
-      lineHeight: 24,
-    },
-    labelMedium: {
-      fontFamily: "PoppingLight",
-      fontSize: 13,
-      lineHeight: 16,
-    },
-  };
-
   const paperThemeWithFonts = {
     ...paperTheme,
     fonts: configureFonts({ config: fontConfig }),
   };
 
   // TODO: remove unnecessary fonts iun the end
-  // NOTE: In fact i won't be deleting any fonts, but i'm aware they are not necessary and should be removed
+  // NOTE: In fact i won't be deleting any fonts for now, but i'm aware they are not necessary and should be removed
 
   const [loaded] = useFonts({
     PoppinsBlack: require("../assets/fonts/Poppins-Black.ttf"),

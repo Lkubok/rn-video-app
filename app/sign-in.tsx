@@ -13,8 +13,7 @@ import { links } from "@/constants/links";
 import { useSession } from "@/core/auth/AuthContext";
 import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/sign-in.styles";
-
-import { useAppTheme } from "./_layout";
+import { useAppTheme } from "@/ui/theme";
 
 export const SignIn = () => {
   const { signIn } = useSession();

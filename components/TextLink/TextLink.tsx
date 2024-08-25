@@ -2,8 +2,7 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 
-import { useAppTheme } from "@/app/_layout";
-import { i18n } from "@/translations/i18n";
+import { useAppTheme } from "@/ui/theme";
 
 import { styles } from "./TexstLink.styles";
 
