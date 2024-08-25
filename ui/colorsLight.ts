@@ -20,11 +20,12 @@ export const colorsLight = {
   onTertiaryContainer: "rgb(50, 16, 23)",
   outline: "rgb(124, 117, 126)",
   outlineVariant: "rgb(204, 196, 206)",
-  primary: "rgb(120, 69, 172)",
+  primary: "#2B2D42",
   primaryContainer: "rgb(240, 219, 255)",
   scrim: "rgb(0, 0, 0)",
   secondary: "rgb(102, 90, 111)",
   secondaryBackground: "#8D99AE", // This is a custom used color
+  onSecondaryBackground: "#FFFFFF", // This is a custom used color
   secondaryContainer: "rgb(237, 221, 246)",
   shadow: "rgb(0, 0, 0)",
   surface: "rgb(255, 251, 255)",

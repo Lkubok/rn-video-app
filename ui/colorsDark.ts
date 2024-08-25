@@ -25,6 +25,7 @@ export const colorsDark = {
   scrim: "rgb(0, 0, 0)",
   secondary: "rgb(208, 193, 218)",
   secondaryBackground: "#8D99AE", // This is a custom used color
+  onSecondaryBackground: "#FFFFFF", // This is a custom used color
   secondaryContainer: "rgb(77, 67, 87)",
   shadow: "rgb(0, 0, 0)",
   surface: "rgb(29, 27, 30)",

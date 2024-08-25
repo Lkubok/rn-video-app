@@ -6,5 +6,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     borderRadius: 12,
+    height: 48,
   },
 });

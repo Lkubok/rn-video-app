@@ -25,8 +25,14 @@ import { SessionProvider } from "@/core/auth/AuthContext";
 import { colorsDark } from "@/ui/colorsDark";
 import { colorsLight } from "@/ui/colorsLight";
 
-const customDarkTheme = { ...MD3DarkTheme, colors: colorsDark };
-const customLightTheme = { ...MD3LightTheme, colors: colorsLight };
+const customDarkTheme = {
+  ...MD3DarkTheme,
+  colors: { ...MD3DarkTheme.colors, ...colorsDark },
+};
+const customLightTheme = {
+  ...MD3LightTheme,
+  colors: { ...MD3LightTheme.colors, ...colorsLight },
+};
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
@@ -47,10 +53,21 @@ export default function Root() {
     colorScheme === "dark" ? CombinedDarkTheme : CombinedLightTheme;
 
   const fontConfig = {
-    bodySmall: {
-      fontFamily: "PoppinsRegular",
-      fontSize: 12,
+    titleLarge: {
+      fontFamily: "PoppinsSemiBold",
+      fontSize: 22,
+      lineHeight: 24,
+    },
+    titleMedium: {
+      fontFamily: "PoppinsSemiBold",
+      fontSize: 16,
+      lineHeight: 24,
+    },
+    labelMedium: {
+      fontFamily: "PoppingLight",
+      fontSize: 13,
       lineHeight: 16,
+      // fontWeight: "400",
     },
   };
 

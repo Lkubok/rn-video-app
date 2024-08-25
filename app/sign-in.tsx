@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -10,8 +10,11 @@ import { ThemedLayout } from "@/components/ThemedLayout";
 import { useSession } from "@/core/auth/AuthContext";
 import { i18n } from "@/translations/i18n";
 
+import { useAppTheme } from "./_layout";
+
 export const SignIn = () => {
   const { signIn } = useSession();
+  const { colors } = useAppTheme();
   const onSignInHandler = () => {
     signIn();
     router.replace("/");
@@ -32,12 +35,67 @@ export const SignIn = () => {
           <AppIcon height={128} width={128} />
         </View>
         <View style={styles.footer}>
-          <Text>aaa</Text>
+          <Text
+            variant="titleLarge"
+            style={{
+              color: colors.onSecondaryBackground,
+              alignSelf: "flex-start",
+              marginBottom: 32,
+            }}
+          >
+            {i18n.t("auth.welcome_title")}
+          </Text>
           <ThemedButton
             onPress={onSignInHandler}
-            text={i18n.t("auth.login_as_guest")}
+            text={i18n.t("auth.log_in_as_guest")}
           />
-          <Text>aaa</Text>
+          <View
+            style={{
+              marginVertical: 16,
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{ fontWeight: "400", color: colors.onSecondaryBackground }}
+              variant="labelMedium"
+            >
+              {i18n.t("auth.footer_main_text")}
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    fontWeight: "400",
+                    color: colors.primary,
+                    textDecorationLine: "underline",
+                  }}
+                  variant="labelMedium"
+                >
+                  {i18n.t("common.terms_and_conditions")}
+                </Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontWeight: "400",
+                  color: colors.onSecondaryBackground,
+                }}
+                variant="labelMedium"
+              >{` ${i18n.t("common.and")} `}</Text>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    fontWeight: "400",
+                    color: colors.primary,
+                    textDecorationLine: "underline",
+                  }}
+                  variant="labelMedium"
+                >
+                  {i18n.t("common.privacy_policy")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       </SafeAreaView>
     </ThemedLayout>
