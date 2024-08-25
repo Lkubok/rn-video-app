@@ -1,26 +1,28 @@
 import "react-native-reanimated";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { SessionProvider } from "@/core/auth/AuthContext";
-import { Slot } from "expo-router";
-import {
-  PaperProvider,
-  MD3DarkTheme,
-  MD3LightTheme,
-  adaptNavigationTheme,
-  useTheme,
-  configureFonts,
-} from "react-native-paper";
-import { useColorScheme } from "react-native";
-import { colorsDark } from "@/ui/colorsDark";
-import { colorsLight } from "@/ui/colorsLight";
+
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
 import merge from "deepmerge";
+import { useFonts } from "expo-font";
+import { Slot } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import { useColorScheme } from "react-native";
+import {
+  adaptNavigationTheme,
+  configureFonts,
+  MD3DarkTheme,
+  MD3LightTheme,
+  PaperProvider,
+  useTheme,
+} from "react-native-paper";
+
+import { SessionProvider } from "@/core/auth/AuthContext";
+import { colorsDark } from "@/ui/colorsDark";
+import { colorsLight } from "@/ui/colorsLight";
 // import { MD3Type } from "react-native-paper/lib/typescript/types";
 
 const customDarkTheme = { ...MD3DarkTheme, colors: colorsDark };

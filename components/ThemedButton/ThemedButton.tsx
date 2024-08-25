@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleProp, ViewStyle, StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 import { styles } from "./ThemedButton.styles";

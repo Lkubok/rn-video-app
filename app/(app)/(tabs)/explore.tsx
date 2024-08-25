@@ -1,10 +1,11 @@
 // import Ionicons from "@expo/vector-icons/Ionicons";
-import { ThemedText } from "@/components/ThemedText";
 import {
+  Text,
   //  StyleSheet, Image, Platform,
   View,
-  Text,
 } from "react-native";
+
+import { ThemedText } from "@/components/ThemedText";
 
 // import { Collapsible } from "@/components/Collapsible";
 // import { ExternalLink } from "@/components/ExternalLink";
