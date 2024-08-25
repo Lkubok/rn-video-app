@@ -4,6 +4,8 @@ import {
   View,
 } from "react-native";
 
+import CategoryList from "@/components/CategoryList/CategoryList";
+
 // import { HelloWave } from "@/components/HelloWave";
 // import ParallaxScrollView from "@/components/ParallaxScrollView";
 // import { ThemedText } from "@/components/ThemedText";
@@ -12,7 +14,15 @@ import {
 export default function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
-      <Text>Home screen</Text>
+      <View style={{ height: 300 }}>
+        <Text>Header</Text>
+        <Text>Header</Text>
+        <Text>Header</Text>
+        <Text>Header</Text>
+        <Text>Header</Text>
+        <Text>Header</Text>
+      </View>
+      <CategoryList />
     </View>
     // <ParallaxScrollView
     //   headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
