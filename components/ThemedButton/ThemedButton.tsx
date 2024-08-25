@@ -24,7 +24,6 @@ export const ThemedButton = ({
     <Button
       style={StyleSheet.flatten([styles.container, style])}
       mode={mode}
-      // textColor="onPrimary"
       onPress={onPress}
     >
       <Text

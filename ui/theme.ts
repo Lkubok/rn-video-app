@@ -44,6 +44,11 @@ export const fontConfig = {
     fontSize: 16,
     lineHeight: 24,
   },
+  titleSmall: {
+    fontFamily: "PoppinsRegular",
+    fontsize: 16,
+    lineHeight: 24,
+  },
   labelMedium: {
     fontFamily: "PoppinsLight",
     fontSize: 13,
