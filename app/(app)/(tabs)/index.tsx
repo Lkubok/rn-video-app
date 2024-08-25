@@ -11,7 +11,7 @@ import {
 
 export default function HomeScreen() {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Text>Home screen</Text>
     </View>
     // <ParallaxScrollView
