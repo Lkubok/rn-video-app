@@ -4,5 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
+    borderRadius: 12,
   },
 });

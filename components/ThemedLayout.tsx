@@ -2,17 +2,17 @@ import { View, type ViewProps } from "react-native";
 
 import { useAppTheme } from "@/app/_layout";
 
-export type ThemedViewProps = ViewProps & {
+export type ThemedLayoutProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
 };
 
-export function ThemedView({
+export function ThemedLayout({
   style,
   lightColor,
   darkColor,
   ...otherProps
-}: ThemedViewProps) {
+}: ThemedLayoutProps) {
   const { colors } = useAppTheme();
 
   return (

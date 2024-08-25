@@ -19,11 +19,11 @@ import {
   PaperProvider,
   useTheme,
 } from "react-native-paper";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { SessionProvider } from "@/core/auth/AuthContext";
 import { colorsDark } from "@/ui/colorsDark";
 import { colorsLight } from "@/ui/colorsLight";
-// import { MD3Type } from "react-native-paper/lib/typescript/types";
 
 const customDarkTheme = { ...MD3DarkTheme, colors: colorsDark };
 const customLightTheme = { ...MD3LightTheme, colors: colorsLight };
@@ -90,12 +90,14 @@ export default function Root() {
   if (!loaded) return null;
 
   return (
-    <PaperProvider theme={paperThemeWithFonts}>
-      <ThemeProvider value={paperThemeWithFonts}>
-        <SessionProvider>
-          <Slot />
-        </SessionProvider>
-      </ThemeProvider>
-    </PaperProvider>
+    <SafeAreaProvider>
+      <PaperProvider theme={paperThemeWithFonts}>
+        <ThemeProvider value={paperThemeWithFonts}>
+          <SessionProvider>
+            <Slot />
+          </SessionProvider>
+        </ThemeProvider>
+      </PaperProvider>
+    </SafeAreaProvider>
   );
 }
