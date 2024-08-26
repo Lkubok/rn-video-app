@@ -7,7 +7,7 @@ export const categories: CategoryItem[] = [
     id: 2,
     baseSearchWord: "react framework library",
   },
-  // TODO: uncomment in the end
+  // TODO: uncomment in the end of the recruitment task
   {
     name: "React Native",
     type: Category.reactNative,

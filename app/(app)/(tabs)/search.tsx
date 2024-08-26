@@ -1,4 +1,4 @@
-import { router, useFocusEffect } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
@@ -12,7 +12,6 @@ import { Text } from "react-native-paper";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoItem from "@/components/VideoItem/VideoItem";
-// import { useAppSelector } from "@/store/store";
 import { testResponse } from "@/testResponse";
 import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/search.styles";
@@ -22,17 +21,20 @@ interface Video {
   title: string;
   thumbnail: string;
   publishedAt: string;
+  channelName: string;
 }
 
 export default function SearchScreen() {
-  const [searchQuery, setSearchQuery] = useState("react");
+  const [searchQuery, setSearchQuery] = useState("");
   const [videos, setVideos] = useState<Video[]>([]);
   const [numberOfResults] = useState<number>(0);
-  const [searchedPhrase] = useState<string>("ReactNative");
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
-  // const initialSearchedPhrase = useAppSelector(
-  // (state) => state.search.searchedPhrase,
-  // );
+  const params = useLocalSearchParams<{ query?: string }>();
+  console.log("params", params);
+
+  useEffect(() => {
+    params.query && setSearchQuery(params.query);
+  }, [params.query]);
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -41,10 +43,6 @@ export default function SearchScreen() {
       setVideos([]);
     }
   }, [searchQuery]);
-
-  // useFocusEffect(() => {
-  //   initialSearchedPhrase && setSearchQuery(initialSearchedPhrase);
-  // });
 
   const onSortChangePress = () => {};
 
@@ -58,7 +56,6 @@ export default function SearchScreen() {
         thumbnail: item.snippet.thumbnails.medium.url,
         publishedAt: item.snippet.publishedAt,
         channelName: item.snippet.channelTitle,
-        // videoUrl: item.sni
       }));
       setVideos((prevVideos) => [...prevVideos, ...videoData]);
       setNextPageToken(response.data.nextPageToken);
@@ -68,13 +65,7 @@ export default function SearchScreen() {
   };
 
   const renderItem = ({ item }: { item: Video }) => (
-    <VideoItem
-      item={item}
-      variant="large"
-      onPress={() => {
-        router.push("details", { videoId: item.id });
-      }}
-    />
+    <VideoItem item={item} variant="large" />
   );
 
   const handleEndReached = () => {
@@ -102,7 +93,7 @@ export default function SearchScreen() {
             <Text
               variant="headlineSmall"
               style={{ fontWeight: "700", fontFamily: "PoppinsBold" }}
-            >{`"${searchedPhrase}"`}</Text>
+            >{`"${searchQuery}"`}</Text>
           </Text>
           <TouchableOpacity onPress={onSortChangePress}>
             <Text variant="labelSmall" style={{ alignSelf: "flex-end" }}>

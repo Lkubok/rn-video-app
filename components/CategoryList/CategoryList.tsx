@@ -1,11 +1,11 @@
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import React, { useEffect } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 
-import { setSearchPhrase } from "@/store/searchStore";
+// import { setSearchPhrase } from "@/store/searchStore";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-// import { getVideosData } from "@/store/videosActions";
+// import { getInitialVideosData } from "@/store/videosActions";
 import { i18n } from "@/translations/i18n";
 import { CategoryItem } from "@/types/types";
 import { useAppTheme } from "@/ui/theme";
@@ -42,7 +42,7 @@ export const CategoryList = ({ category }: CategoryListProps) => {
 
   useEffect(() => {
     // dispatch(
-    //   getVideosData({
+    //   getInitialVideosData({
     //     q: category.baseSearchWord,
     //     maxResults: 1, // NOTE: 1 is for API quota limit //TODO: change to 10 at the end
     //     order: "relevance",
@@ -69,12 +69,15 @@ export const CategoryList = ({ category }: CategoryListProps) => {
       >
         <Text variant="labelLarge">{category.name}</Text>
 
-        <Link href={`/search`} style={styles.showMore} asChild>
+        <Link
+          href={{
+            pathname: `/search`,
+            params: { query: category.baseSearchWord },
+          }}
+          style={styles.showMore}
+          asChild
+        >
           <TouchableOpacity
-            onPress={() => {
-              dispatch(setSearchPhrase(category.baseSearchWord));
-              router.push("/search");
-            }}
             hitSlop={{ bottom: 12, top: 12, left: 12, right: 12 }}
           >
             <Text variant="labelSmall" style={styles.showMore}>

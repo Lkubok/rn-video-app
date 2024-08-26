@@ -8,7 +8,7 @@ const searchPath = "search";
 
 const API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
 
-export type FetchVideosParams = {
+export type FetchVideoParams = {
   q: string;
   maxResults?: number;
   pageToken?: string;
@@ -17,8 +17,15 @@ export type FetchVideosParams = {
 };
 
 export class VideoApiService {
+  static readonly fetchInitialVideos = async (
+    params: FetchVideoParams,
+  ): Promise<AxiosResponse<VideoResponse>> =>
+    axiosInstance.get(searchPath, {
+      params: { ...params, key: API_KEY, channelId: "" },
+    });
+
   static readonly fetchVideos = async (
-    params: FetchVideosParams,
+    params: FetchVideoParams,
   ): Promise<AxiosResponse<VideoResponse>> =>
     axiosInstance.get(searchPath, {
       params: { ...params, key: API_KEY, channelId: "" },

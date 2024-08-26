@@ -20,7 +20,10 @@ type Props = {
 export const VideoItem = ({ item, variant = "small", onPress }: Props) => {
   const renderSmallVideoItem = () => (
     <Link
-      href={{ pathname: "/details/[id]", params: { id: item.id, item } }}
+      href={{
+        pathname: "/details/[id]",
+        params: { id: item.id, item: item as any },
+      }}
       asChild
     >
       <TouchableOpacity style={smallStyles.itemContainer} onPress={() => {}}>
@@ -38,7 +41,10 @@ export const VideoItem = ({ item, variant = "small", onPress }: Props) => {
 
   const renderLargeVideoItem = () => (
     <Link
-      href={{ pathname: "/details/[id]", params: { id: item.id, item } }}
+      href={{
+        pathname: "/details/[id]",
+        params: { id: item.id, item: item as any },
+      }}
       asChild
     >
       <TouchableOpacity style={largeStyles.itemContainer}>

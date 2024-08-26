@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { VideoItem } from "@/types/types";
 
-import { getVideosData } from "./videosActions";
+import { getInitialVideosData } from "./videosActions";
 
 export type VideoItemsWithTag = {
   q: string;
@@ -32,7 +32,7 @@ export const videosStore = createSlice({
     },
   },
   extraReducers: ({ addCase }) => {
-    addCase(getVideosData.fulfilled, (state, action) => {
+    addCase(getInitialVideosData.fulfilled, (state, action) => {
       const mappedVideos: VideoItemsWithTag[] = action.payload.items.map(
         (item) => ({
           ...item,
