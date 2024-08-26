@@ -1,11 +1,15 @@
 // import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 import Video, { VideoRef } from "react-native-video";
 
+import PersonIcon from "@/assets/icons/person-icon.svg";
+import Badge from "@/components/Badge/Badge";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoControls from "@/components/VideoControls/VideoControls";
+import { i18n } from "@/translations/i18n";
 
 import { responseMovie } from "./videoResponse";
 
@@ -18,6 +22,7 @@ const VideoDetailsScreen = () => {
   const [isPaused, setIsPaused] = useState(true);
   const [controlsVisible, setControlsVisible] = useState(false);
   const { id } = params;
+  const { colors } = useTheme();
 
   const [videoDetails, setVideoDetails] = useState({
     videoUrl: "",
@@ -74,11 +79,70 @@ const VideoDetailsScreen = () => {
             />
           )}
           <View style={{ marginHorizontal: 24 }}>
-            <Text style={styles.title}>{videoDetails.title}</Text>
-            <Text style={styles.description}>{videoDetails.description}</Text>
+            <Text variant="labelLarge" style={styles.title} numberOfLines={1}>
+              {videoDetails.title}
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                paddingVertical: 24,
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: colors.primary,
+                  height: 48,
+                  width: 48,
+                  borderRadius: 24,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 24,
+                }}
+              >
+                <PersonIcon stroke={"white"} height={24} width={24} />
+              </View>
+              <Text variant="headlineMedium" style={styles.stats}>
+                Channel name to change
+              </Text>
+            </View>
+            <View>
+              <Text style={{ color: "red", fontSize: 24 }}>
+                TAB NAVIGATOR TO ADD
+              </Text>
+            </View>
+            <View>
+              <Text
+                variant="headlineSmall"
+                style={{
+                  fontSize: 12,
+                  fontFamily: "PoppinsSemiBold",
+                }}
+              >
+                {i18n.t("details.descriptionHeader")}
+              </Text>
+              <Text variant="labelSmall" style={styles.description}>
+                {videoDetails.description}
+              </Text>
+              <Text
+                variant="headlineSmall"
+                style={{
+                  fontSize: 12,
+                  fontFamily: "PoppinsSemiBold",
+                }}
+              >
+                {i18n.t("details.statisticsHeader")}
+              </Text>
+            </View>
             <View style={styles.statsContainer}>
-              <Text style={styles.stats}>Views: {videoDetails.views}</Text>
-              <Text style={styles.stats}>Likes: {videoDetails.likes}</Text>
+              <Badge
+                icon="views"
+                text={`${videoDetails.views} ${i18n.t("details.views")}`}
+              />
+              <Badge
+                icon="like"
+                text={`${videoDetails.views} ${i18n.t("details.likes")}`}
+              />
             </View>
           </View>
         </View>
@@ -96,7 +160,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   backButtonText: {
-    fontSize: 16,
+    // fontSize: 16,
     color: "blue",
   },
   video: {
@@ -104,14 +168,15 @@ const styles = StyleSheet.create({
     height: 280,
   },
   title: {
-    marginTop: 10,
-    fontSize: 20,
+    marginTop: 24,
+    // fontSize: 20,
     fontWeight: "bold",
   },
   description: {
-    marginTop: 10,
-    fontSize: 16,
-    color: "gray",
+    marginTop: 8,
+    marginBottom: 24,
+    // fontSize: 16,
+    lineHeight: 14,
   },
   statsContainer: {
     marginTop: 20,
@@ -119,8 +184,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   stats: {
-    fontSize: 16,
-    color: "gray",
+    // fontSize: 16,
   },
 });
 
