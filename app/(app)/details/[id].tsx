@@ -1,32 +1,22 @@
-import axios from "axios";
-import { useLocalSearchParams, useRouter } from "expo-router";
+// import axios from "axios";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, Text, View } from "react-native";
 import Video, { VideoRef } from "react-native-video";
 
-import AirPlayIcon from "@/assets/icons/airplay-icon.svg";
-import BackwardIcon from "@/assets/icons/backward-icon.svg";
-import ForwardIcon from "@/assets/icons/forward-icon.svg";
-import FullscreenIcon from "@/assets/icons/fullscreen-icon.svg";
-import LeftArrow from "@/assets/icons/leftarrow-icon.svg";
-import PlayIcon from "@/assets/icons/play-icon.svg";
-import SoundIcon from "@/assets/icons/volume-icon.svg";
 import { ThemedLayout } from "@/components/ThemedLayout";
+import VideoControls from "@/components/VideoControls/VideoControls";
 
 import { responseMovie } from "./videoResponse";
 
-const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
+// const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
 
-const VideoDetailsScreen = ({ route }) => {
-  const router = useRouter();
+const VideoDetailsScreen = () => {
+  // const router = useRouter();
   const params = useLocalSearchParams();
+  const videoRef = useRef<VideoRef>(null);
+  const [isPaused, setIsPaused] = useState(true);
+  const [controlsVisible, setControlsVisible] = useState(false);
   const { id } = params;
 
   const [videoDetails, setVideoDetails] = useState({
@@ -52,8 +42,7 @@ const VideoDetailsScreen = ({ route }) => {
       // console.log(response);
       const videoData = response.data.items[0];
       setVideoDetails({
-        videoUrl: `https://www.youtube.com/watch?v=${videoId}`,
-        // videoUrl: `http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4`,
+        videoUrl: `http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4`,
         title: videoData.snippet.title,
         description: videoData.snippet.description,
         views: videoData.statistics.viewCount,
@@ -64,202 +53,25 @@ const VideoDetailsScreen = ({ route }) => {
     }
   };
 
-  console.log("videoDetails.videoUrl", videoDetails.videoUrl);
-
-  const movie = require("./test.mp4");
-
-  const videoRef = useRef<VideoRef>(null);
-
-  // useEffect(() => {
-  // videoRef.current?.resume();
-  // }, []);
-  const [isPaused, setIsPaused] = useState(true);
-  const play = () => {
-    // videoRef.current?.(1.0);
-    setIsPaused((state) => !state);
-  };
-  const [controlsVisible, setControlsVisible] = useState(false);
-
   return (
     <ThemedLayout style={{ flex: 1 }}>
       <View style={[{ flex: 1 }]}>
         <View style={styles.container}>
-          {/* <TouchableOpacity style={styles.backButton} onPress={() => play()}>
-            <Text style={styles.backButtonText}>Play</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Text style={styles.backButtonText}>Back</Text>
-          </TouchableOpacity> */}
           <Video
             ref={videoRef}
-            source={{
-              uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-              // uri: videoDetails.videoUrl,
-            }}
+            source={{ uri: videoDetails.videoUrl }}
             onTouchStart={() => setControlsVisible((state) => !state)}
             style={styles.video}
             paused={isPaused}
             controls={false}
             resizeMode="cover"
           />
-          {/* <TouchableOpacity
-            style={styles.video}
-            onPress={() => setControlsVisible((state) => !state)}
-          /> */}
+
           {controlsVisible && (
-            <TouchableOpacity
-              onPress={() => setControlsVisible(false)}
-              style={{
-                position: "absolute",
-                top: 0,
-                height: 280,
-                backgroundColor: "rgba(255, 255, 255, 0.5)",
-                width: "100%",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  paddingTop: StatusBar.currentHeight,
-                  paddingHorizontal: 24,
-                  // flex: 1,
-                  width: "100%",
-                  // borderWidth: 2,
-                  // borderColor: "red",
-                }}
-              >
-                <TouchableOpacity
-                  style={{
-                    height: 32,
-                    width: 32,
-                    borderRadius: 16,
-                    backgroundColor: "rgba(0,0,0,0.25)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onPress={() => router.back()}
-                >
-                  <LeftArrow height={24} width={24} />
-                </TouchableOpacity>
-                <View
-                  style={{
-                    flex: 1,
-                    // borderWidth: 2,
-                    // borderColor: "aqua",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <TouchableOpacity
-                    style={{
-                      height: 32,
-                      width: 32,
-                      borderRadius: 16,
-                      backgroundColor: "rgba(0,0,0,0.25)",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginLeft: 8,
-                    }}
-                    onPress={() => {}}
-                  >
-                    <SoundIcon height={24} width={24} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      height: 32,
-                      width: 32,
-                      borderRadius: 16,
-                      backgroundColor: "rgba(0,0,0,0.25)",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginLeft: 8,
-                    }}
-                    onPress={() => {}}
-                  >
-                    <AirPlayIcon height={24} width={24} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View
-                style={{
-                  // borderWidth: 2,
-                  // borderColor: "green",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flex: 1,
-                  flexDirection: "row",
-                }}
-              >
-                <TouchableOpacity
-                  style={{
-                    height: 32,
-                    width: 32,
-                    borderRadius: 16,
-                    backgroundColor: "rgba(0,0,0,0.25)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onPress={() => {}}
-                >
-                  <BackwardIcon />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    height: 40,
-                    width: 40,
-                    borderRadius: 20,
-                    backgroundColor: "rgba(0,0,0,0.25)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    // paddingHorizontal: "48",
-                    margin: 64,
-                  }}
-                  onPress={() => setIsPaused((state) => !state)}
-                >
-                  <PlayIcon />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{
-                    height: 32,
-                    width: 32,
-                    borderRadius: 16,
-                    backgroundColor: "rgba(0,0,0,0.25)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onPress={() => {}}
-                >
-                  <ForwardIcon />
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  // borderWidth: 2,
-                  // borderColor: "red",
-                  height: 40,
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                  paddingHorizontal: 24,
-                }}
-              >
-                <TouchableOpacity
-                  style={{
-                    height: 32,
-                    width: 32,
-                    // borderRadius: 16,
-                    // backgroundColor: "rgba(0,0,0,0.25)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onPress={() => {}}
-                >
-                  <FullscreenIcon width={24} height={24} />
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
+            <VideoControls
+              setControlsVisible={setControlsVisible}
+              setIsPaused={setIsPaused}
+            />
           )}
           <View style={{ marginHorizontal: 24 }}>
             <Text style={styles.title}>{videoDetails.title}</Text>
@@ -278,8 +90,6 @@ const VideoDetailsScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 10,
-    // backgroundColor: "#fff",
     marginHorizontal: -24,
   },
   backButton: {
@@ -292,8 +102,6 @@ const styles = StyleSheet.create({
   video: {
     width: "100%",
     height: 280,
-    // borderWidth: 10,
-    // borderColor: "red",
   },
   title: {
     marginTop: 10,
