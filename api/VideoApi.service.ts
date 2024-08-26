@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { VideoResponse } from "@/components/CategoryList/storedResponse";
+import { VideoResponse } from "@/types/types";
 
 import { axiosInstance } from "./axiosInstance";
 
@@ -18,7 +18,7 @@ export type FetchVideosParams = {
 
 export class VideoApiService {
   static readonly fetchVideos = async (
-    params: FetchVideosParams
+    params: FetchVideosParams,
   ): Promise<AxiosResponse<VideoResponse>> =>
     axiosInstance.get(searchPath, {
       params: { ...params, key: API_KEY, channelId: "" },

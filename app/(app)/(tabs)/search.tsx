@@ -27,11 +27,11 @@ interface Video {
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState("react");
   const [videos, setVideos] = useState<Video[]>([]);
-  const [numberOfResults, setNumberOfResults] = useState<number>(0);
-  const [searchedPhrase, setSearchedPhrase] = useState<string>("ReactNative");
+  const [numberOfResults] = useState<number>(0);
+  const [searchedPhrase] = useState<string>("ReactNative");
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
   const initialSearchedPhrase = useAppSelector(
-    (state) => state.search.searchedPhrase
+    (state) => state.search.searchedPhrase,
   );
 
   useEffect(() => {

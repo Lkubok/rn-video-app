@@ -37,7 +37,7 @@ export const videosStore = createSlice({
         (item) => ({
           ...item,
           q: action.meta.arg.q,
-        })
+        }),
       );
       state.initialVideos = [...state.initialVideos, ...mappedVideos];
     });
