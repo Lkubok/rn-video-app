@@ -1,4 +1,3 @@
-// import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -17,7 +16,6 @@ import { responseMovie } from "./videoResponse";
 // const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
 
 const VideoDetailsScreen = () => {
-  // const router = useRouter();
   const params = useLocalSearchParams();
   const videoRef = useRef<VideoRef>(null);
   const [isPaused, setIsPaused] = useState(true);
@@ -107,11 +105,7 @@ const VideoDetailsScreen = () => {
                 Channel name to change
               </Text>
             </View>
-            {/* <View>
-              <Text style={{ color: "red", fontSize: 24 }}>
-                TAB NAVIGATOR TO ADD
-              </Text>
-            </View> */}
+
             <View style={{}}>
               <AnimatedTabs />
             </View>
@@ -163,23 +157,18 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 10,
   },
-  backButtonText: {
-    // fontSize: 16,
-    color: "blue",
-  },
+  backButtonText: {},
   video: {
     width: "100%",
     height: 280,
   },
   title: {
     marginTop: 24,
-    // fontSize: 20,
     fontWeight: "bold",
   },
   description: {
     marginTop: 8,
     marginBottom: 24,
-    // fontSize: 16,
     lineHeight: 14,
   },
   statsContainer: {
@@ -187,9 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  stats: {
-    // fontSize: 16,
-  },
+  stats: {},
 });
 
 export default VideoDetailsScreen;
