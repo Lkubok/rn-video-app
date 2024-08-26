@@ -12,7 +12,7 @@ import { Text } from "react-native-paper";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoItem from "@/components/VideoItem/VideoItem";
-import { useAppSelector } from "@/store/store";
+// import { useAppSelector } from "@/store/store";
 import { testResponse } from "@/testResponse";
 import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/search.styles";
@@ -30,9 +30,9 @@ export default function SearchScreen() {
   const [numberOfResults] = useState<number>(0);
   const [searchedPhrase] = useState<string>("ReactNative");
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
-  const initialSearchedPhrase = useAppSelector(
-    (state) => state.search.searchedPhrase,
-  );
+  // const initialSearchedPhrase = useAppSelector(
+  // (state) => state.search.searchedPhrase,
+  // );
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -42,9 +42,9 @@ export default function SearchScreen() {
     }
   }, [searchQuery]);
 
-  useFocusEffect(() => {
-    initialSearchedPhrase && setSearchQuery(initialSearchedPhrase);
-  });
+  // useFocusEffect(() => {
+  //   initialSearchedPhrase && setSearchQuery(initialSearchedPhrase);
+  // });
 
   const onSortChangePress = () => {};
 

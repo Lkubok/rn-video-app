@@ -21,4 +21,10 @@ export const styles = StyleSheet.create({
     fontFamily: "PoppinsRegular",
     fontWeight: "400",
   },
+  asButton: {
+    position: "absolute",
+    height: 44,
+    width: "100%",
+    marginRight: 44,
+  },
 });

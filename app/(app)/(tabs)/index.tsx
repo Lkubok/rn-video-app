@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,7 +13,7 @@ import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/home.styles";
 
 export default function HomeScreen() {
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery] = useState("");
   const { signOut } = useSession();
   // TODO: add settings screen instead logout functionality
   const onSettingsPress = () => signOut();
@@ -27,9 +28,10 @@ export default function HomeScreen() {
           <View style={styles.marginRestore}>
             <View style={styles.header}>
               <SearchBar
-                onChangeText={setSearchQuery}
                 placeholder={i18n.t("home.searchBarPlaceholder")}
-                value={searchQuery}
+                value={""}
+                onPress={() => router.push("/search")}
+                mode="button"
               />
 
               <TouchableOpacity

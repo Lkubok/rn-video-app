@@ -19,16 +19,21 @@ type Props = {
 
 export const VideoItem = ({ item, variant = "small", onPress }: Props) => {
   const renderSmallVideoItem = () => (
-    <TouchableOpacity style={smallStyles.itemContainer} onPress={() => {}}>
-      <Image source={{ uri: item.thumbnail }} style={smallStyles.thumbnail} />
-      <Text variant="bodySmall" numberOfLines={2} style={smallStyles.title}>
-        {item.title}
-      </Text>
-      <Text variant="headlineSmall" style={smallStyles.date}>
-        {/* TODO: change locale string according to device settings */}
-        {new Date(item.publishedAt).toLocaleDateString("pl-PL")}
-      </Text>
-    </TouchableOpacity>
+    <Link
+      href={{ pathname: "/details/[id]", params: { id: item.id, item } }}
+      asChild
+    >
+      <TouchableOpacity style={smallStyles.itemContainer} onPress={() => {}}>
+        <Image source={{ uri: item.thumbnail }} style={smallStyles.thumbnail} />
+        <Text variant="bodySmall" numberOfLines={2} style={smallStyles.title}>
+          {item.title}
+        </Text>
+        <Text variant="headlineSmall" style={smallStyles.date}>
+          {/* TODO: change locale string according to device settings */}
+          {new Date(item.publishedAt).toLocaleDateString("pl-PL")}
+        </Text>
+      </TouchableOpacity>
+    </Link>
   );
 
   const renderLargeVideoItem = () => (
