@@ -12,6 +12,10 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 EXPO_PUBLIC_YOUTUBE_KEY=YOUR_API_KEY_HERE
 ```
 
+## Run app in expo prebuild
+
+Because of usage react-native-video library, Expo Go is no longer an option. To run the app properly please use commands below
+
 1. Install dependencies
 
    ```bash
@@ -20,13 +24,17 @@ EXPO_PUBLIC_YOUTUBE_KEY=YOUR_API_KEY_HERE
 
 2. Start the app
 
-   ```bash
-    npx expo start
-   ```
+##### android:
 
-In the output, you'll find options to open the app in a
+```bash
+npx expo run:android
+```
 
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+##### ios
+
+```bash
+npx expo run:ios
+```
 
 ## Get a fresh project
 
