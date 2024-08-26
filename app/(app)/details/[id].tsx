@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Video from "react-native-video";
+import Video, { VideoRef } from "react-native-video";
 
 import { ThemedLayout } from "@/components/ThemedLayout";
 
@@ -52,22 +52,38 @@ const VideoDetailsScreen = ({ route }) => {
 
   console.log("videoDetails.videoUrl", videoDetails.videoUrl);
 
+  const videoRef = useRef<VideoRef>(null);
+
+  // useEffect(() => {
+  // videoRef.current?.resume();
+  // }, []);
+
+  const play = () => {
+    videoRef.current?.resume();
+  };
+
   return (
     <ThemedLayout style={{ flex: 1 }}>
       <SafeAreaView style={[{ flex: 1 }]}>
         <View style={styles.container}>
+          <TouchableOpacity style={styles.backButton} onPress={() => play()}>
+            <Text style={styles.backButtonText}>Play</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => router.back()}
           >
             <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
-          <Video
-            source={{ uri: videoDetails.videoUrl }}
-            style={styles.video}
-            controls
-            resizeMode="contain"
-          />
+          {videoDetails.videoUrl && (
+            <Video
+              ref={videoRef}
+              source={{ uri: videoDetails.videoUrl }}
+              style={styles.video}
+              controls={true}
+              resizeMode="contain"
+            />
+          )}
           <Text style={styles.title}>{videoDetails.title}</Text>
           <Text style={styles.description}>{videoDetails.description}</Text>
           <View style={styles.statsContainer}>
@@ -97,6 +113,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     backgroundColor: "black",
+    // position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    borderWidth: 10,
+    borderColor: "red",
   },
   title: {
     marginTop: 10,
