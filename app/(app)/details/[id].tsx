@@ -10,8 +10,9 @@ import Badge from "@/components/Badge/Badge";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoControls from "@/components/VideoControls/VideoControls";
 import { i18n } from "@/translations/i18n";
+import { responseMovie } from "@/videoResponse";
 
-import { responseMovie } from "./videoResponse";
+// import { responseMovie } from "./videoResponse";
 
 const VideoDetailsScreen = () => {
   const params = useLocalSearchParams();

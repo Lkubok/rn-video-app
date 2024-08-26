@@ -5,7 +5,7 @@ import { Text } from "react-native-paper";
 
 import { setSearchPhrase } from "@/store/searchStore";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { getVideosData } from "@/store/videosActions";
+// import { getVideosData } from "@/store/videosActions";
 import { i18n } from "@/translations/i18n";
 import { CategoryItem } from "@/types/types";
 import { useAppTheme } from "@/ui/theme";

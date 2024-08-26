@@ -1,14 +1,10 @@
-// import axios from "axios";
 import { router, useFocusEffect } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
-  // Image,
   SafeAreaView,
   StatusBar,
-  // StyleSheet,
   TouchableOpacity,
-  // Text,
   View,
 } from "react-native";
 import { Text } from "react-native-paper";
@@ -17,13 +13,9 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoItem from "@/components/VideoItem/VideoItem";
 import { useAppSelector } from "@/store/store";
+import { testResponse } from "@/testResponse";
 import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/search.styles";
-
-// import { styles } from "@/ui/screenStyles/home.styles";
-import { testResponse } from "./testResponse";
-
-// const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
 
 interface Video {
   id: string;
@@ -58,11 +50,8 @@ export default function SearchScreen() {
 
   const fetchVideos = async (pageToken: string | null = null) => {
     try {
-      // const response = await axios.get(
-      // `https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&q=${searchQuery}&part=snippet&maxResults=10${pageToken ? `&pageToken=${pageToken}` : ""}`
-      // );
-      // console.log(response);
       const response = testResponse;
+      // TODO: remove unnecessary data from project structure
       const videoData = response.data.items.map((item: any) => ({
         id: item.id.videoId,
         title: item.snippet.title,

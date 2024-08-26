@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { VideoItem } from "@/components/CategoryList/storedResponse";
+import { VideoItem } from "@/types/types";
 
 import { getVideosData } from "./videosActions";
 
@@ -37,7 +37,7 @@ export const videosStore = createSlice({
         (item) => ({
           ...item,
           q: action.meta.arg.q,
-        }),
+        })
       );
       state.initialVideos = [...state.initialVideos, ...mappedVideos];
     });

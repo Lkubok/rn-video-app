@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 
 import { largeStyles, smallStyles } from "./VideoItem.styles";

@@ -23,7 +23,7 @@ interface Id {
   videoId: string;
 }
 
-export interface VideoItem {
+interface VideoItem {
   kind: string;
   etag: string;
   id: Id;
@@ -35,7 +35,7 @@ interface PageInfo {
   resultsPerPage: number;
 }
 
-export interface VideoResponse {
+interface VideoResponse {
   kind: string;
   etag: string;
   nextPageToken: string;
