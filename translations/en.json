@@ -28,6 +28,8 @@
     "descriptionHeader": "Description",
     "statisticsHeader": "Statistics",
     "views": "views",
-    "likes": "likes"
+    "likes": "likes",
+    "details": "Details",
+    "notes": "Notes"
   }
 }

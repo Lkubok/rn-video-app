@@ -6,6 +6,7 @@ import { Text, useTheme } from "react-native-paper";
 import Video, { VideoRef } from "react-native-video";
 
 import PersonIcon from "@/assets/icons/person-icon.svg";
+import AnimatedTabs from "@/components/AnimatedTabs/AnimatedTabs";
 import Badge from "@/components/Badge/Badge";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoControls from "@/components/VideoControls/VideoControls";
@@ -106,10 +107,13 @@ const VideoDetailsScreen = () => {
                 Channel name to change
               </Text>
             </View>
-            <View>
+            {/* <View>
               <Text style={{ color: "red", fontSize: 24 }}>
                 TAB NAVIGATOR TO ADD
               </Text>
+            </View> */}
+            <View style={{}}>
+              <AnimatedTabs />
             </View>
             <View>
               <Text

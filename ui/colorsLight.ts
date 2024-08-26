@@ -1,5 +1,5 @@
 export const colorsLight = {
-  backdrop: "rgba(51, 47, 55, 0.4)",
+  backdrop: "#C8C8C8",
   background: "#FFFFFF", // this one is changes according to designs
   error: "rgb(186, 26, 26)",
   errorContainer: "rgb(255, 218, 214)",
