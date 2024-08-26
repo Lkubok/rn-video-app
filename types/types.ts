@@ -16,4 +16,5 @@ export type CategoryItem = {
   name: string;
   type: Category;
   id: number;
+  baseSearchWord: string;
 };

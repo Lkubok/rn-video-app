@@ -13,8 +13,6 @@ import { i18n } from "@/translations/i18n";
 
 import { responseMovie } from "./videoResponse";
 
-// const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
-
 const VideoDetailsScreen = () => {
   const params = useLocalSearchParams();
   const videoRef = useRef<VideoRef>(null);
@@ -39,11 +37,7 @@ const VideoDetailsScreen = () => {
 
   const fetchVideoDetails = async (videoId: string) => {
     try {
-      // const response = await axios.get(
-      // `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${YOUTUBE_API_KEY}&part=snippet,statistics`
-      // );
       const response = responseMovie;
-      // console.log(response);
       const videoData = response.data.items[0];
       setVideoDetails({
         videoUrl: `http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4`,
@@ -75,6 +69,7 @@ const VideoDetailsScreen = () => {
             <VideoControls
               setControlsVisible={setControlsVisible}
               setIsPaused={setIsPaused}
+              toggleFullscreen={() => videoRef.current?.setFullScreen(true)}
             />
           )}
           <View style={{ marginHorizontal: 24 }}>

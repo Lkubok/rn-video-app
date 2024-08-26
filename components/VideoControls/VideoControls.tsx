@@ -13,9 +13,14 @@ import SoundIcon from "@/assets/icons/volume-icon.svg";
 type Props = {
   setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
   setControlsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleFullscreen: () => void;
 };
 
-export const VideoControls = ({ setControlsVisible, setIsPaused }: Props) => {
+export const VideoControls = ({
+  setControlsVisible,
+  setIsPaused,
+  toggleFullscreen,
+}: Props) => {
   const router = useRouter();
   return (
     <TouchableOpacity
@@ -150,7 +155,7 @@ export const VideoControls = ({ setControlsVisible, setIsPaused }: Props) => {
             justifyContent: "center",
             alignItems: "center",
           }}
-          onPress={() => {}}
+          onPress={toggleFullscreen}
         >
           <FullscreenIcon width={24} height={24} />
         </TouchableOpacity>

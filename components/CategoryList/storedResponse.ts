@@ -1,3 +1,49 @@
+interface Thumbnail {
+  url: string;
+  width: number;
+  height: number;
+}
+
+interface Thumbnails {
+  default: Thumbnail;
+  medium: Thumbnail;
+  [key: string]: Thumbnail; // To handle any additional thumbnail sizes
+}
+
+interface Snippet {
+  publishedAt: string;
+  channelId: string;
+  title: string;
+  description: string;
+  thumbnails: Thumbnails;
+}
+
+interface Id {
+  kind: string;
+  videoId: string;
+}
+
+export interface VideoItem {
+  kind: string;
+  etag: string;
+  id: Id;
+  snippet: Snippet;
+}
+
+interface PageInfo {
+  totalResults: number;
+  resultsPerPage: number;
+}
+
+export interface VideoResponse {
+  kind: string;
+  etag: string;
+  nextPageToken: string;
+  regionCode: string;
+  pageInfo: PageInfo;
+  items: VideoItem[];
+}
+
 export const storedResponse = {
   data: {
     kind: "youtube#searchListResponse",

@@ -1,10 +1,11 @@
 // import axios from "axios";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
   // Image,
   SafeAreaView,
+  StatusBar,
   // StyleSheet,
   TouchableOpacity,
   // Text,
@@ -15,6 +16,7 @@ import { Text } from "react-native-paper";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoItem from "@/components/VideoItem/VideoItem";
+import { useAppSelector } from "@/store/store";
 import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/search.styles";
 
@@ -36,6 +38,9 @@ export default function SearchScreen() {
   const [numberOfResults, setNumberOfResults] = useState<number>(0);
   const [searchedPhrase, setSearchedPhrase] = useState<string>("ReactNative");
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
+  const initialSearchedPhrase = useAppSelector(
+    (state) => state.search.searchedPhrase
+  );
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -44,6 +49,10 @@ export default function SearchScreen() {
       setVideos([]);
     }
   }, [searchQuery]);
+
+  useFocusEffect(() => {
+    initialSearchedPhrase && setSearchQuery(initialSearchedPhrase);
+  });
 
   const onSortChangePress = () => {};
 
@@ -87,7 +96,9 @@ export default function SearchScreen() {
 
   return (
     <ThemedLayout style={styles.layout}>
-      <SafeAreaView style={[styles.safeArea, {}]}>
+      <SafeAreaView
+        style={[styles.safeArea, { paddingTop: StatusBar.currentHeight }]}
+      >
         <View style={styles.header}>
           <SearchBar
             onChangeText={setSearchQuery}
