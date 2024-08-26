@@ -23,5 +23,13 @@
     "results_found": "results found for: ",
     "sort_by": "Sort by: ",
     "sort_option_popular": "Most popular"
+  },
+  "details": {
+    "descriptionHeader": "Description",
+    "statisticsHeader": "Statistics",
+    "views": "views",
+    "likes": "likes",
+    "details": "Details",
+    "notes": "Notes"
   }
 }

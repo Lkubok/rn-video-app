@@ -1,20 +1,27 @@
-import axios from "axios";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
 import Video, { VideoRef } from "react-native-video";
 
+import PersonIcon from "@/assets/icons/person-icon.svg";
+import AnimatedTabs from "@/components/AnimatedTabs/AnimatedTabs";
+import Badge from "@/components/Badge/Badge";
 import { ThemedLayout } from "@/components/ThemedLayout";
+import VideoControls from "@/components/VideoControls/VideoControls";
+import { i18n } from "@/translations/i18n";
 
 import { responseMovie } from "./videoResponse";
 
-const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
+// const YOUTUBE_API_KEY = process.env.EXPO_PUBLIC_YOUTUBE_KEY;
 
-const VideoDetailsScreen = ({ route }) => {
-  const router = useRouter();
+const VideoDetailsScreen = () => {
   const params = useLocalSearchParams();
+  const videoRef = useRef<VideoRef>(null);
+  const [isPaused, setIsPaused] = useState(true);
+  const [controlsVisible, setControlsVisible] = useState(false);
   const { id } = params;
+  const { colors } = useTheme();
 
   const [videoDetails, setVideoDetails] = useState({
     videoUrl: "",
@@ -39,7 +46,7 @@ const VideoDetailsScreen = ({ route }) => {
       // console.log(response);
       const videoData = response.data.items[0];
       setVideoDetails({
-        videoUrl: `https://www.youtube.com/watch?v=${videoId}`,
+        videoUrl: `http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4`,
         title: videoData.snippet.title,
         description: videoData.snippet.description,
         views: videoData.statistics.viewCount,
@@ -50,48 +57,94 @@ const VideoDetailsScreen = ({ route }) => {
     }
   };
 
-  console.log("videoDetails.videoUrl", videoDetails.videoUrl);
-
-  const videoRef = useRef<VideoRef>(null);
-
-  // useEffect(() => {
-  // videoRef.current?.resume();
-  // }, []);
-
-  const play = () => {
-    videoRef.current?.resume();
-  };
-
   return (
     <ThemedLayout style={{ flex: 1 }}>
-      <SafeAreaView style={[{ flex: 1 }]}>
+      <View style={[{ flex: 1 }]}>
         <View style={styles.container}>
-          <TouchableOpacity style={styles.backButton} onPress={() => play()}>
-            <Text style={styles.backButtonText}>Play</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Text style={styles.backButtonText}>Back</Text>
-          </TouchableOpacity>
-          {videoDetails.videoUrl && (
-            <Video
-              ref={videoRef}
-              source={{ uri: videoDetails.videoUrl }}
-              style={styles.video}
-              controls={true}
-              resizeMode="contain"
+          <Video
+            ref={videoRef}
+            source={{ uri: videoDetails.videoUrl }}
+            onTouchStart={() => setControlsVisible((state) => !state)}
+            style={styles.video}
+            paused={isPaused}
+            controls={false}
+            resizeMode="cover"
+          />
+
+          {controlsVisible && (
+            <VideoControls
+              setControlsVisible={setControlsVisible}
+              setIsPaused={setIsPaused}
             />
           )}
-          <Text style={styles.title}>{videoDetails.title}</Text>
-          <Text style={styles.description}>{videoDetails.description}</Text>
-          <View style={styles.statsContainer}>
-            <Text style={styles.stats}>Views: {videoDetails.views}</Text>
-            <Text style={styles.stats}>Likes: {videoDetails.likes}</Text>
+          <View style={{ marginHorizontal: 24 }}>
+            <Text variant="labelLarge" style={styles.title} numberOfLines={1}>
+              {videoDetails.title}
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                paddingVertical: 24,
+                alignItems: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: colors.primary,
+                  height: 48,
+                  width: 48,
+                  borderRadius: 24,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: 24,
+                }}
+              >
+                <PersonIcon stroke={"white"} height={24} width={24} />
+              </View>
+              <Text variant="headlineMedium" style={styles.stats}>
+                Channel name to change
+              </Text>
+            </View>
+
+            <View style={{}}>
+              <AnimatedTabs />
+            </View>
+            <View>
+              <Text
+                variant="headlineSmall"
+                style={{
+                  fontSize: 12,
+                  fontFamily: "PoppinsSemiBold",
+                }}
+              >
+                {i18n.t("details.descriptionHeader")}
+              </Text>
+              <Text variant="labelSmall" style={styles.description}>
+                {videoDetails.description}
+              </Text>
+              <Text
+                variant="headlineSmall"
+                style={{
+                  fontSize: 12,
+                  fontFamily: "PoppinsSemiBold",
+                }}
+              >
+                {i18n.t("details.statisticsHeader")}
+              </Text>
+            </View>
+            <View style={styles.statsContainer}>
+              <Badge
+                icon="views"
+                text={`${videoDetails.views} ${i18n.t("details.views")}`}
+              />
+              <Badge
+                icon="like"
+                text={`${videoDetails.views} ${i18n.t("details.likes")}`}
+              />
+            </View>
           </View>
         </View>
-      </SafeAreaView>
+      </View>
     </ThemedLayout>
   );
 };
@@ -99,47 +152,31 @@ const VideoDetailsScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    backgroundColor: "#fff",
+    marginHorizontal: -24,
   },
   backButton: {
     marginBottom: 10,
   },
-  backButtonText: {
-    fontSize: 16,
-    color: "blue",
-  },
+  backButtonText: {},
   video: {
     width: "100%",
-    height: 200,
-    backgroundColor: "black",
-    // position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    borderWidth: 10,
-    borderColor: "red",
+    height: 280,
   },
   title: {
-    marginTop: 10,
-    fontSize: 20,
+    marginTop: 24,
     fontWeight: "bold",
   },
   description: {
-    marginTop: 10,
-    fontSize: 16,
-    color: "gray",
+    marginTop: 8,
+    marginBottom: 24,
+    lineHeight: 14,
   },
   statsContainer: {
     marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  stats: {
-    fontSize: 16,
-    color: "gray",
-  },
+  stats: {},
 });
 
 export default VideoDetailsScreen;

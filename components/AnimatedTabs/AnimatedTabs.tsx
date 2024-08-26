@@ -1,0 +1,90 @@
+import React, { useRef, useState } from "react";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
+
+import { i18n } from "@/translations/i18n";
+
+type Props = {};
+
+export const AnimatedTabs: React.FC = (props: Props) => {
+  const [, setActiveTab] = useState(0);
+  const translateX = useRef(new Animated.Value(0)).current;
+  const [tabWidth, setTabWidth] = useState(0);
+  const { colors } = useTheme();
+
+  const handleTabPress = (index: number) => {
+    setActiveTab(index);
+    Animated.spring(translateX, {
+      toValue: index * tabWidth,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  return (
+    <View
+      style={styles.container}
+      onLayout={(e) => {
+        console.log(e.nativeEvent.layout.width);
+        setTabWidth(e.nativeEvent.layout.width / 2);
+      }}
+    >
+      <View style={styles.tabContainer}>
+        <TouchableOpacity style={styles.tab} onPress={() => handleTabPress(0)}>
+          <Text variant="bodyMedium" style={styles.tabText}>
+            {i18n.t("details.details")}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tab} onPress={() => handleTabPress(1)}>
+          <Text variant="bodyMedium" style={styles.tabText}>
+            {i18n.t("details.notes")}
+          </Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            position: "absolute",
+            height: 2,
+            width: "100%",
+            bottom: 0,
+            backgroundColor: colors.backdrop,
+          }}
+        />
+        <Animated.View
+          style={[
+            styles.animatedTab,
+            {
+              backgroundColor: colors.primary,
+              width: tabWidth,
+              transform: [{ translateX }],
+            },
+          ]}
+        />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {},
+  tabContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
+  },
+  tab: {
+    borderRadius: 5,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tabText: {},
+  animatedTab: {
+    position: "absolute",
+    height: 2,
+    backgroundColor: "blue",
+    bottom: 0,
+  },
+  contentContainer: {},
+  tabContent: {},
+});
+
+export default AnimatedTabs;

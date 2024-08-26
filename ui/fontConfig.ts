@@ -34,6 +34,11 @@ export const fontConfig = {
     fontSize: 10,
     lineHeight: 24,
   },
+  headlineMedium: {
+    fontFamily: "PoppinsSemiBold",
+    fontSize: 14,
+    lineHeight: 24,
+  },
   bodySmall: {
     fontFamily: "PoppinsRegular",
     fontSize: 12,
