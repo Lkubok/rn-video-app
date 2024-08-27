@@ -51,7 +51,6 @@ export const VideoItem = ({ item, variant = "small", onPress }: Props) => {
         <Image source={{ uri: item.thumbnail }} style={largeStyles.thumbnail} />
         <Text variant="bodyMedium" style={largeStyles.title}>
           {/* TODO: add channel name */}
-          {/* {item.channelName} */}
           {item.id}
         </Text>
         <Text variant="displayMedium" style={largeStyles.description}>

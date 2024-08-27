@@ -14,7 +14,7 @@ export const getInitialVideosData = createAsyncThunk<
   "videos/getInitialVideosData",
   async (params, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await VideoApiService.fetchInitialVideos(params);
+      const { data } = await VideoApiService.fetchVideos(params);
       return data;
     } catch (e) {
       const error = e as AxiosError;
@@ -22,5 +22,21 @@ export const getInitialVideosData = createAsyncThunk<
       console.error(error);
       return rejectWithValue(e as never);
     }
-  },
+  }
 );
+
+export const fetchVideos = createAsyncThunk<
+  VideoResponse,
+  FetchVideoParams,
+  ThunkApiConfig
+>("videos/fetchVideos", async (params, { rejectWithValue, dispatch }) => {
+  try {
+    const { data } = await VideoApiService.fetchVideos(params);
+    return data;
+  } catch (e) {
+    const error = e as AxiosError;
+
+    console.error(error);
+    return rejectWithValue(e as never);
+  }
+});

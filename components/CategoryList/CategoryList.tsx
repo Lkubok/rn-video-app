@@ -3,9 +3,8 @@ import React, { useEffect } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 
-// import { setSearchPhrase } from "@/store/searchStore";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-// import { getInitialVideosData } from "@/store/videosActions";
+import { getInitialVideosData } from "@/store/videosActions";
 import { i18n } from "@/translations/i18n";
 import { CategoryItem } from "@/types/types";
 import { useAppTheme } from "@/ui/theme";
@@ -41,14 +40,14 @@ export const CategoryList = ({ category }: CategoryListProps) => {
     }));
 
   useEffect(() => {
-    // dispatch(
-    //   getInitialVideosData({
-    //     q: category.baseSearchWord,
-    //     maxResults: 1, // NOTE: 1 is for API quota limit //TODO: change to 10 at the end
-    //     order: "relevance",
-    //     part: "snippet",
-    //   })
-    // );
+    dispatch(
+      getInitialVideosData({
+        q: category.baseSearchWord,
+        maxResults: 3, // NOTE: 3 is for API quota limit //TODO: change to 10 at the end
+        order: "relevance",
+        part: "snippet",
+      })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

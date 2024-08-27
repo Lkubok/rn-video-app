@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -12,7 +12,9 @@ import { Text } from "react-native-paper";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
 import VideoItem from "@/components/VideoItem/VideoItem";
-import { testResponse } from "@/testResponse";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { fetchVideos } from "@/store/videosActions";
+import { resetSearchedVideos } from "@/store/videosStore";
 import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/search.styles";
 
@@ -26,43 +28,50 @@ interface Video {
 
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [videos, setVideos] = useState<Video[]>([]);
   const [numberOfResults] = useState<number>(0);
-  const [nextPageToken, setNextPageToken] = useState<string | null>(null);
   const params = useLocalSearchParams<{ query?: string }>();
-  console.log("params", params);
+  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+  const nextPageToken = useAppSelector((state) => state.videos.nextPageToken);
+  const dispatch = useAppDispatch();
+  const videosItems = useAppSelector((state) => state.videos.searchedVideos);
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const videos = videosItems.map((item: any) => ({
+    id: item?.id?.videoId,
+    title: item?.snippet?.title,
+    thumbnail: item?.snippet?.thumbnails.medium.url,
+    publishedAt: item?.snippet?.publishedAt,
+    channelName: item?.snippet?.channelTitle,
+  }));
 
   useEffect(() => {
     params.query && setSearchQuery(params.query);
   }, [params.query]);
 
   useEffect(() => {
-    if (searchQuery.length > 0) {
-      fetchVideos();
-    } else {
-      setVideos([]);
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
     }
+    debounceTimer.current = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 500);
   }, [searchQuery]);
 
-  const onSortChangePress = () => {};
-
-  const fetchVideos = async (pageToken: string | null = null) => {
-    try {
-      const response = testResponse;
-      // TODO: remove unnecessary data from project structure
-      const videoData = response.data.items.map((item: any) => ({
-        id: item.id.videoId,
-        title: item.snippet.title,
-        thumbnail: item.snippet.thumbnails.medium.url,
-        publishedAt: item.snippet.publishedAt,
-        channelName: item.snippet.channelTitle,
-      }));
-      setVideos((prevVideos) => [...prevVideos, ...videoData]);
-      setNextPageToken(response.data.nextPageToken);
-    } catch (error) {
-      console.error("Error fetching videos: ", error);
+  useEffect(() => {
+    if (debouncedQuery.length > 0) {
+      dispatch(
+        fetchVideos({
+          q: debouncedQuery,
+          pageToken: nextPageToken,
+          maxResults: 1,
+        })
+      );
+    } else {
+      dispatch(resetSearchedVideos());
     }
-  };
+  }, [debouncedQuery, dispatch, nextPageToken]);
+
+  const onSortChangePress = () => {};
 
   const renderItem = ({ item }: { item: Video }) => (
     <VideoItem item={item} variant="large" />
@@ -70,7 +79,7 @@ export default function SearchScreen() {
 
   const handleEndReached = () => {
     if (nextPageToken) {
-      fetchVideos(nextPageToken);
+      dispatch(fetchVideos({ q: searchQuery, pageToken: nextPageToken }));
     }
   };
 

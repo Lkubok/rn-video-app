@@ -17,15 +17,8 @@ export type FetchVideoParams = {
 };
 
 export class VideoApiService {
-  static readonly fetchInitialVideos = async (
-    params: FetchVideoParams,
-  ): Promise<AxiosResponse<VideoResponse>> =>
-    axiosInstance.get(searchPath, {
-      params: { ...params, key: API_KEY, channelId: "" },
-    });
-
   static readonly fetchVideos = async (
-    params: FetchVideoParams,
+    params: FetchVideoParams
   ): Promise<AxiosResponse<VideoResponse>> =>
     axiosInstance.get(searchPath, {
       params: { ...params, key: API_KEY, channelId: "" },

@@ -12,8 +12,6 @@ import VideoControls from "@/components/VideoControls/VideoControls";
 import { i18n } from "@/translations/i18n";
 import { responseMovie } from "@/videoResponse";
 
-// import { responseMovie } from "./videoResponse";
-
 const VideoDetailsScreen = () => {
   const params = useLocalSearchParams();
   const videoRef = useRef<VideoRef>(null);

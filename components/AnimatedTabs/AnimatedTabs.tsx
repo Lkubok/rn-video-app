@@ -26,7 +26,6 @@ export const AnimatedTabs: React.FC = (props: Props) => {
     <View
       style={styles.container}
       onLayout={(e) => {
-        console.log(e.nativeEvent.layout.width);
         setTabWidth(e.nativeEvent.layout.width / 2);
       }}
     >
