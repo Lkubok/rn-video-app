@@ -10,12 +10,11 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { colorsDark } from "@/ui/colorsDark";
 import { colorsLight } from "@/ui/colorsLight";
 
 const customDarkTheme = {
   ...MD3DarkTheme,
-  colors: { ...MD3DarkTheme.colors, ...colorsDark },
+  colors: { ...MD3DarkTheme.colors, ...colorsLight },
 };
 const customLightTheme = {
   ...MD3LightTheme,
