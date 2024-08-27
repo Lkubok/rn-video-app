@@ -28,7 +28,12 @@ export const SignIn = () => {
     await WebBrowser.openBrowserAsync(uri);
 
   return (
-    <ThemedLayout style={styles.container}>
+    <ThemedLayout
+      style={[
+        styles.container,
+        { backgroundColor: colors.secondaryBackground },
+      ]}
+    >
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.header}>
           <Logo />

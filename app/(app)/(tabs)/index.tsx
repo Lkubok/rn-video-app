@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { router } from "expo-router";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -6,16 +6,18 @@ import SettingsIcon from "@/assets/icons/settings-icon.svg";
 import CategoryList from "@/components/CategoryList/CategoryList";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { ThemedLayout } from "@/components/ThemedLayout";
+import { useSession } from "@/core/auth/AuthContext";
 import { categories } from "@/models/categories";
 import { i18n } from "@/translations/i18n";
 import { styles } from "@/ui/screenStyles/home.styles";
 
 export default function HomeScreen() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const onSettingsPress = () => {};
+  const { signOut } = useSession();
+  // TODO: add settings screen instead logout functionality
+  const onSettingsPress = () => signOut();
 
   return (
-    <ThemedLayout style={styles.layout}>
+    <ThemedLayout style={[styles.layout]}>
       <ScrollView
         style={styles.marginReset}
         showsVerticalScrollIndicator={false}
@@ -24,9 +26,10 @@ export default function HomeScreen() {
           <View style={styles.marginRestore}>
             <View style={styles.header}>
               <SearchBar
-                onChangeText={setSearchQuery}
                 placeholder={i18n.t("home.searchBarPlaceholder")}
-                value={searchQuery}
+                value={""}
+                onPress={() => router.push("/search")}
+                mode="button"
               />
 
               <TouchableOpacity
@@ -41,11 +44,7 @@ export default function HomeScreen() {
           {categories
             .sort((a, b) => a.id - b.id)
             .map((category) => (
-              <CategoryList
-                key={category.id}
-                category={category.name}
-                id={category.id}
-              />
+              <CategoryList category={category} />
             ))}
         </SafeAreaView>
       </ScrollView>

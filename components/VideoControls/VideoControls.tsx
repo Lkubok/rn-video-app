@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import React from "react";
-import { StatusBar, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 
 import AirPlayIcon from "@/assets/icons/airplay-icon.svg";
 import BackwardIcon from "@/assets/icons/backward-icon.svg";
@@ -10,151 +10,67 @@ import LeftArrow from "@/assets/icons/leftarrow-icon.svg";
 import PlayIcon from "@/assets/icons/play-icon.svg";
 import SoundIcon from "@/assets/icons/volume-icon.svg";
 
+import { styles } from "./VideoControl.styles";
+
 type Props = {
   setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
   setControlsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleFullscreen: () => void;
 };
 
-export const VideoControls = ({ setControlsVisible, setIsPaused }: Props) => {
+export const VideoControls = ({
+  setControlsVisible,
+  setIsPaused,
+  toggleFullscreen,
+}: Props) => {
   const router = useRouter();
   return (
     <TouchableOpacity
       onPress={() => setControlsVisible(false)}
-      style={{
-        position: "absolute",
-        top: 0,
-        height: 280,
-        backgroundColor: "rgba(255, 255, 255, 0.5)",
-        width: "100%",
-      }}
+      style={styles.container}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          paddingTop: StatusBar.currentHeight,
-          paddingHorizontal: 24,
-          width: "100%",
-        }}
-      >
+      <View style={styles.controlsHeader}>
         <TouchableOpacity
-          style={{
-            height: 32,
-            width: 32,
-            borderRadius: 16,
-            backgroundColor: "rgba(0,0,0,0.25)",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={styles.mediumIcon}
           onPress={() => router.back()}
         >
           <LeftArrow height={24} width={24} />
         </TouchableOpacity>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "flex-end",
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              height: 32,
-              width: 32,
-              borderRadius: 16,
-              backgroundColor: "rgba(0,0,0,0.25)",
-              justifyContent: "center",
-              alignItems: "center",
-              marginLeft: 8,
-            }}
-            onPress={() => {}}
-          >
+        <View style={styles.topRightControls}>
+          <TouchableOpacity style={[styles.mediumIcon, { marginLeft: 8 }]}>
             <SoundIcon height={24} width={24} />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              height: 32,
-              width: 32,
-              borderRadius: 16,
-              backgroundColor: "rgba(0,0,0,0.25)",
-              justifyContent: "center",
-              alignItems: "center",
-              marginLeft: 8,
-            }}
-            onPress={() => {}}
-          >
+          <TouchableOpacity style={[styles.mediumIcon, { marginLeft: 8 }]}>
             <AirPlayIcon height={24} width={24} />
           </TouchableOpacity>
         </View>
       </View>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1,
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity
-          style={{
-            height: 32,
-            width: 32,
-            borderRadius: 16,
-            backgroundColor: "rgba(0,0,0,0.25)",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => {}}
-        >
+
+      <View style={styles.controlsCenter}>
+        <TouchableOpacity style={styles.mediumIcon}>
           <BackwardIcon />
         </TouchableOpacity>
         <TouchableOpacity
-          style={{
-            height: 40,
-            width: 40,
-            borderRadius: 20,
-            backgroundColor: "rgba(0,0,0,0.25)",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: 64,
-          }}
+          style={styles.bigIcon}
           onPress={() => setIsPaused((state) => !state)}
         >
+          {/* TODO: change icon on play/pause state */}
           <PlayIcon />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: 32,
-            width: 32,
-            borderRadius: 16,
-            backgroundColor: "rgba(0,0,0,0.25)",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => {}}
-        >
+        <TouchableOpacity style={styles.mediumIcon}>
           <ForwardIcon />
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          height: 40,
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          paddingHorizontal: 24,
-        }}
-      >
+
+      <View style={styles.controlsBottom}>
         <TouchableOpacity
-          style={{
-            height: 32,
-            width: 32,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onPress={() => {}}
+          style={styles.fullScreenIcon}
+          onPress={toggleFullscreen}
         >
           <FullscreenIcon width={24} height={24} />
         </TouchableOpacity>
       </View>
+      {/* TODO: add red progress bar */}
     </TouchableOpacity>
   );
 };

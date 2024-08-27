@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
-import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Animated, TouchableOpacity, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
 import { i18n } from "@/translations/i18n";
+
+import { styles } from "./AnimatedTabs.styles";
 
 type Props = {};
 
@@ -24,7 +26,6 @@ export const AnimatedTabs: React.FC = (props: Props) => {
     <View
       style={styles.container}
       onLayout={(e) => {
-        console.log(e.nativeEvent.layout.width);
         setTabWidth(e.nativeEvent.layout.width / 2);
       }}
     >
@@ -62,29 +63,5 @@ export const AnimatedTabs: React.FC = (props: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-  tabContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginBottom: 20,
-  },
-  tab: {
-    borderRadius: 5,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  tabText: {},
-  animatedTab: {
-    position: "absolute",
-    height: 2,
-    backgroundColor: "blue",
-    bottom: 0,
-  },
-  contentContainer: {},
-  tabContent: {},
-});
 
 export default AnimatedTabs;
